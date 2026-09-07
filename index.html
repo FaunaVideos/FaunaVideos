@@ -495,7 +495,8 @@
                     notificarTelegram(`🛒 Usuario iniciando pedido: ${productoTitulo} (${nombre})`);
 
                     // 1. Registramos el pedido en tu backend (Node.js) para que Dropi guarde la orden
-                    const resBack = await fetch('http://localhost:3000/crear-orden-dropi', {
+                    const resBack = await fetch('https://fees-outer-rats-mas.trycloudflare.com/crear-orden-dropi', {
+
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ productId, productoTitulo, precio, nombre, telefono, direccion })
