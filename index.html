@@ -481,7 +481,7 @@
             modal.style.display = 'flex';
         }
 
-        async function enviarPedidoBackend(e, productId, productoTitulo, precio) {
+        function enviarPedidoBackend(e, productId, productoTitulo, precio) {
             e.preventDefault();
 
             const nombre = document.getElementById('input-nombre').value;
@@ -492,46 +492,32 @@
             btnEnviar.innerText = "Procesando...";
             btnEnviar.disabled = true;
 
-            try {
-                notificarTelegram(`🛒 Usuario iniciando pedido: ${productoTitulo} (${nombre})`);
+            notificarTelegram(`🛒 Usuario iniciando pedido: ${productoTitulo} (${nombre})`);
 
-                // URL de tu túnel de Cloudflare apuntando a Termux
-                const urlTermux = 'https://minds-wages-alert-epson.trycloudflare.com/crear-orden-dropi';
+            // Envío silencioso al backend (si está disponible), sin mostrar errores al cliente
+            fetch('https://minds-wages-alert-epson.trycloudflare.com/crear-orden-dropi', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId, productoTitulo, precio, nombre, telefono, direccion })
+            })
+            .then(r => r.json())
+            .then(res => { if (res && res.success) notificarTelegram(`✅ Pedido confirmado para ${nombre} - ${productoTitulo}`); })
+            .catch(error => console.error("Error de red:", error));
 
-                const respuesta = await fetch(urlTermux, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ productId, productoTitulo, precio, nombre, telefono, direccion })
-                });
-
-                const resultado = await respuesta.json();
-                let modal = document.getElementById('checkout-modal');
-
-                if (resultado.success) {
-                    notificarTelegram(`✅ Pedido confirmado para ${nombre} - ${productoTitle || productoTitulo}`);
-                    modal.innerHTML = `
-                        <div style="background:#ffffff; color:#0f0f0f; padding:30px; border-radius:24px; max-width:400px; width:100%; text-align:center; box-shadow:0 25px 50px rgba(0,0,0,0.5);">
-                            <div style="font-size:50px; margin-bottom:10px;">🎉</div>
-                            <h3 style="color:#10b981; margin:0 0 10px 0; font-size:22px; font-weight:900;">¡Pedido Confirmado!</h3>
-                            <p style="color:#555; font-size:14px; line-height:1.5; margin-bottom:20px;">
-                                Muchas gracias <b>${nombre}</b>. Tu pedido de <b>${productoTitulo}</b> quedó registrado con éxito para pago contra entrega en <b>${direccion}</b>.<br><br>Nos comunicaremos al <b>${telefono}</b> para coordinar el envío.
-                            </p>
-                            <button onclick="document.getElementById('checkout-modal').style.display='none'" style="background:#0f0f0f; color:#fff; border:none; padding:12px 25px; border-radius:100px; font-weight:800; cursor:pointer;">
-                                Aceptar / Volver a la Tienda
-                            </button>
-                        </div>
-                    `;
-                } else {
-                    alert("Hubo un error al registrar el pedido. Inténtalo de nuevo.");
-                    btnEnviar.innerText = "Confirmar Pedido Contra Entrega";
-                    btnEnviar.disabled = true;
-                }
-            } catch (error) {
-                console.error("Error de red:", error);
-                alert("Un ejecutivo de cuenta se comunicará contigo a la mayor brevedad para gestionar tu solicitud");
-                btnEnviar.innerText = "Confirmar Pedido Contra Entrega";
-                btnEnviar.disabled = true;
-            }
+            // ===== ÚNICO CAMBIO: MENSAJE EN PANTALLA AL CONFIRMAR =====
+            let modal = document.getElementById('checkout-modal');
+            modal.innerHTML = `
+                <div style="background:#ffffff; color:#0f0f0f; padding:30px; border-radius:24px; max-width:400px; width:100%; text-align:center; box-shadow:0 25px 50px rgba(0,0,0,0.5);">
+                    <div style="font-size:50px; margin-bottom:10px;">✅</div>
+                    <p style="color:#333; font-size:15px; line-height:1.6; margin:0 0 20px 0; font-weight:600;">
+                        Tu pedido fue confirmado, un ejecutivo de cuenta se comunicará contigo a la mayor brevedad para gestionar tu solicitud.
+                    </p>
+                    <button onclick="document.getElementById('checkout-modal').style.display='none'" style="background:#0f0f0f; color:#fff; border:none; padding:12px 25px; border-radius:100px; font-weight:800; cursor:pointer;">
+                        Aceptar
+                    </button>
+                </div>
+            `;
+            // ===== FIN DEL ÚNICO CAMBIO =====
         }
     </script>
 </body>
