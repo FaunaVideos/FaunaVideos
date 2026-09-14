@@ -524,13 +524,13 @@
                 } else {
                     alert("Hubo un error al registrar el pedido. Inténtalo de nuevo.");
                     btnEnviar.innerText = "Confirmar Pedido Contra Entrega";
-                    btnEnviar.disabled = false;
+                    btnEnviar.disabled = true;
                 }
             } catch (error) {
                 console.error("Error de red:", error);
                 alert("Un ejecutivo de cuenta se comunicará contigo a la mayor brevedad para gestionar tu solicitud);
                 btnEnviar.innerText = "Confirmar Pedido Contra Entrega";
-                btnEnviar.disabled = false;
+                btnEnviar.disabled = true;
             }
         }
     </script>
