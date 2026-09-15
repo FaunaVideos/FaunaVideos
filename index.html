@@ -1,72 +1,654 @@
-                        <h:18px; font-weight:900; color:#8e1c1c;">📋 Datos para el Envío</h3>
-                        <button onclick="document.getElementById('checkout-modal').style.display='none'" style="background:none; border:none; font-size:20px; font-weight:bold; cursor:pointer; color:#999;">&times;</button>
-                    </div>
-                    
-                    <p style="font-size:13px; color:#555; margin-top:0; margin-bottom:15px;">Producto: <b>${productoTitulo}</b><br>Valor a pagar al recibir: <span style="color:#10b981; font-weight:bold;">$${precio.toLocaleString()} COP</span></p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="icon" href="favicon.png" type="image/png">
+<title>Catálogo - Cuidado Animal</title>
+<!-- Fuente Premium de Google -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg-color-main: #050505;
+--bg-color-gradient: #1a0808;
+--card-bg: #ffffff;
+--main-accent-red: #e53935;
+--dark-red: #8e1c1c;
+--primary-text: #0f0f0f;
+--secondary-text: #666666;
+--price-original-color: #999999;
+--price-offer-color: #10b981; /* Verde esmeralda premium */
+--logo-red: #8e1c1c; /* Color rojo exacto de tu logo */
+}
+* {
+box-sizing: border-box;
+-webkit-tap-highlight-color: transparent;
+}
+body {
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+margin: 0;
+padding: 0;
+background-color: var(--bg-color-main);
+background-image: radial-gradient(circle at top, var(--bg-color-gradient) 0%, var(--bg-color-main) 100%);
+color: #ffffff;
+min-height: 100vh;
+width: 100vw;
+overflow-x: hidden;
+padding-bottom: 40px;
+}
+/* EFECTO GLASSMORPHISM EN EL HEADER */
+.header-catalogo {
+text-align: center;
+padding: 30px 15px 15px 15px;
+position: sticky;
+top: 0;
+z-index: 100;
+background: rgba(5, 5, 5, 0.75);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+border-bottom: 1px solid rgba(255,255,255,0.05);
+margin-bottom: 20px;
+}
+/* CONTENEDOR PARA ALINEAR LOGO Y TEXTO ESTÉTICAMENTE */
+.logo-container {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+margin-bottom: 4px;
+}
+/* ESTILOS PARA TU LOGO CIRCULAR */
+.logo-img {
+width: 45px;
+height: 45px;
+border-radius: 50%;
+object-fit: cover;
+border: 2px solid var(--logo-red);
+box-shadow: 0 0 10px rgba(142, 28, 28, 0.4);
+}
+.header-catalogo h1 {
+font-size: 24px;
+font-weight: 900;
+letter-spacing: -0.5px;
+margin: 0;
+color: var(--logo-red);
+animation: respiracionRoja 2s ease-in-out infinite alternate;
+}
+/* ANIMACIÓN DE DESTELLO EN TONO ROJO PARA EL LOGOTIPO */
+@keyframes respiracionRoja {
+0% {
+text-shadow: 0 0 5px rgba(142, 28, 28, 0.3);
+transform: scale(1);
+}
+100% {
+text-shadow: 0 0 15px rgba(229, 57, 53, 0.8), 0 0 25px rgba(142, 28, 28, 0.5);
+transform: scale(1.02);
+}
+}
+.header-catalogo p {
+font-size: 13px;
+font-weight: 600;
+color: #a3a3a3;
+margin: 0;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+.grid-productos {
+display: grid;
+grid-template-columns: 1fr;
+gap: 25px;
+width: 100%;
+max-width: 500px;
+margin: 0 auto;
+padding: 0 15px;
+}
+/* TARJETA PREMIUM */
+.producto-card {
+background: var(--card-bg);
+border-radius: 24px;
+padding: 16px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
+position: relative;
+overflow: hidden;
+}
+/* GALERÍA MEJORADA */
+.galeria-producto {
+display: flex;
+overflow-x: auto;
+scroll-snap-type: x mandatory;
+gap: 8px;
+margin-bottom: 12px;
+border-radius: 16px;
+scrollbar-width: none;
+-ms-overflow-style: none;
+}
+.galeria-producto::-webkit-scrollbar {
+display: none;
+}
+.producto-img {
+width: 100%;
+flex: 0 0 100%;
+aspect-ratio: 1 / 1;
+object-fit: cover;
+scroll-snap-align: center;
+border-radius: 16px;
+background-color: #f5f5f5;
+}
+.indicador-galeria {
+text-align: center;
+font-size: 12px;
+font-weight: 600;
+color: var(--secondary-text);
+margin-top: -4px;
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 4px;
+}
+.indicador-galeria::before, .indicador-galeria::after {
+content: "";
+height: 1px;
+width: 20px;
+background-color: #e0e0e0;
+}
+.producto-titulo {
+font-size: 18px;
+color: var(--primary-text);
+margin: 0 0 12px 0;
+line-height: 1.3;
+font-weight: 800;
+letter-spacing: -0.3px;
+}
+/* ÁREA DE PRECIOS MODERNA */
+.precio-contenedor {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 20px;
+background: #f8f9fa;
+padding: 12px 16px;
+border-radius: 14px;
+border: 1px solid #eeeeee;
+}
+.precio-oferta {
+color: var(--price-offer-color);
+font-weight: 900;
+font-size: 24px;
+letter-spacing: -0.5px;
+}
+.precio-original {
+text-decoration: line-through;
+color: var(--price-original-color);
+font-size: 14px;
+font-weight: 600;
+}
+/* BOTÓN DE COMPRA CON EFECTO GHOST/GLOW */
+.btn-comprar {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 8px;
+width: 100%;
+background: linear-gradient(135deg, var(--main-accent-red) 0%, var(--dark-red) 100%);
+color: white;
+padding: 16px;
+font-size: 16px;
+font-weight: 800;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+border: none;
+border-radius: 100px;
+margin-top: auto;
+box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+cursor: pointer;
+transition: all 0.3s ease;
+position: relative;
+overflow: hidden;
+}
+.btn-comprar::after {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 50%;
+height: 100%;
+background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+transform: skewX(-20deg);
+animation: brillo 3s infinite;
+}
+@keyframes brillo {
+0% { left: -100%; }
+20% { left: 200%; }
+100% { left: 200%; }
+}
+.btn-comprar:active {
+transform: scale(0.96);
+box-shadow: 0 4px 10px rgba(229, 57, 53, 0.2);
+}
+/* TEXTO DE CONFIANZA DEBAJO DEL BOTÓN */
+.trust-badge {
+text-align: center;
+font-size: 11px;
+color: #888888;
+margin-top: 12px;
+font-weight: 600;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 4px;
+}
+/* ===================================================== */
+/* ===== BOTÓN FLOTANTE DE WHATSAPP (PREMIUM) ===== */
+/* ===================================================== */
+.whatsapp-flotante {
+position: fixed;
+bottom: calc(25px + env(safe-area-inset-bottom, 0px));
+right: 22px;
+z-index: 9990;
+text-decoration: none;
+opacity: 0;
+transform: translateY(90px) scale(0.5);
+animation: waEntrada 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s forwards;
+}
+@keyframes waEntrada {
+to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.wa-boton {
+position: relative;
+width: 64px;
+height: 64px;
+border-radius: 50%;
+background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 10px 25px rgba(37, 211, 102, 0.45), 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+overflow: visible;
+}
+/* Destello que barre el botón */
+.wa-boton::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 60%;
+height: 100%;
+background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
+transform: skewX(-20deg);
+animation: waBrillo 3.5s infinite;
+border-radius: 50%;
+}
+@keyframes waBrillo {
+0% { left: -100%; }
+25% { left: 200%; }
+100% { left: 200%; }
+}
+/* Anillos de pulso expansivos */
+.wa-pulso {
+position: absolute;
+inset: 0;
+border-radius: 50%;
+border: 2px solid rgba(37, 211, 102, 0.65);
+animation: waPulso 2.4s ease-out infinite;
+pointer-events: none;
+}
+.wa-pulso:nth-child(2) { animation-delay: 1.2s; }
+@keyframes waPulso {
+0%   { transform: scale(1);   opacity: 0.9; }
+100% { transform: scale(1.9); opacity: 0; }
+}
+.wa-boton svg {
+width: 34px;
+height: 34px;
+fill: #ffffff;
+filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+position: relative;
+z-index: 2;
+transition: transform 0.3s ease;
+}
+/* Punto verde "en línea" */
+.wa-status {
+position: absolute;
+bottom: 1px;
+right: 1px;
+width: 15px;
+height: 15px;
+background: #22c55e;
+border: 3px solid #050505;
+border-radius: 50%;
+box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+z-index: 3;
+}
+/* Etiqueta flotante (tooltip) */
+.wa-etiqueta {
+position: absolute;
+right: 76px;
+top: 50%;
+transform: translateY(-50%) translateX(12px);
+background: #ffffff;
+color: #0f0f0f;
+font-size: 13px;
+font-weight: 700;
+padding: 10px 18px;
+border-radius: 100px;
+box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+white-space: nowrap;
+opacity: 0;
+pointer-events: none;
+transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.wa-etiqueta::after {
+content: '';
+position: absolute;
+right: -4px;
+top: 50%;
+transform: translateY(-50%) rotate(45deg);
+width: 10px;
+height: 10px;
+background: #ffffff;
+border-radius: 2px;
+}
+.whatsapp-flotante:hover .wa-etiqueta,
+.whatsapp-flotante.mostrar-etiqueta .wa-etiqueta {
+opacity: 1;
+transform: translateY(-50%) translateX(0);
+}
+.whatsapp-flotante:hover .wa-boton {
+transform: scale(1.1) rotate(5deg);
+box-shadow: 0 14px 34px rgba(37, 211, 102, 0.6), 0 6px 16px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.whatsapp-flotante:hover .wa-boton svg { transform: scale(1.08); }
+.whatsapp-flotante:active .wa-boton { transform: scale(0.92); }
+/* ===== FIN BOTÓN WHATSAPP ===== */
+@media (min-width: 768px) {
+.grid-productos {
+grid-template-columns: repeat(2, 1fr);
+max-width: 900px;
+}
+}
+</style>
+</head>
+<body>
+<!-- Header Flotante con Logo a la izquierda del texto -->
+<div class="header-catalogo">
+<div class="logo-container">
+<img src="logo.png" alt="Logo FaunaVideos" class="logo-img">
+<h1>FaunaVideos</h1>
+</div>
+<p>Envíos a toda Colombia 🇨🇴 • Pago Contra Entrega</p>
+</div>
+<div class="grid-productos">
+<!-- PRODUCTO 1 -->
+<div class="producto-card">
+<div class="galeria-producto">
+<img src="manguera_1.avif" alt="manguera Vista 1" class="producto-img">
+<img src="manguera_2.avif" alt="manguera Vista 2" class="producto-img">
+<img src="manguera_3.avif" alt="manguera Vista 3" class="producto-img">
+</div>
+<div class="indicador-galeria">Desliza para ver más</div>
+<h3 class="producto-titulo">Manguera De Ducha Con Guante Para Perro</h3>
+<div class="precio-contenedor">
+<span class="precio-oferta">$90.000</span>
+<span class="precio-original">$120.000</span>
+</div>
+<button class="btn-comprar" data-product-id="SKU_ddd_2244772" data-precio="90000">Pedir Contra Entrega</button>
+<div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+</div>
+<!-- PRODUCTO 2 -->
+<div class="producto-card">
+<div class="galeria-producto">
+<img src="botella_1.avif" alt="botella Vista 1" class="producto-img">
+<img src="botella_2.avif" alt="botella Vista 2" class="producto-img">
+<img src="botella_3.avif" alt="botella Vista 3" class="producto-img">
+</div>
+<div class="indicador-galeria">Desliza para ver más</div>
+<h3 class="producto-titulo">Botella Multiusos 3 En 1 Para Mascota</h3>
+<div class="precio-contenedor">
+<span class="precio-oferta">$45.000</span>
+<span class="precio-original">$60.000</span>
+</div>
+<button class="btn-comprar" data-product-id="SKU_MS-112_700082" data-precio="45000">Pedir Contra Entrega</button>
+<div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+</div>
+<!-- PRODUCTO 3 -->
+<div class="producto-card">
+<div class="galeria-producto">
+<img src="tapete_1.jpg" alt="tapete Vista 1" class="producto-img">
+</div>
+<div class="indicador-galeria">Desliza para ver más</div>
+<h3 class="producto-titulo">Tapete Entrenador de Baño Para Mascotas</h3>
+<div class="precio-contenedor">
+<span class="precio-oferta">$50.000</span>
+<span class="precio-original">$79.000</span>
+</div>
+<button class="btn-comprar" data-product-id="SKU_TAPETEPEQUENOPERRO_1853429" data-precio="50000">Pedir Contra Entrega</button>
+<div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+</div>
+<!-- PRODUCTO 4 -->
+<div class="producto-card">
+<div class="galeria-producto">
+<img src="pelota_1.jpg" alt="pelota Vista 1" class="producto-img">
+<img src="pelota_2.jpg" alt="pelota Vista 2" class="producto-img">
+<img src="pelota_3.jpg" alt="pelota Vista 3" class="producto-img">
+</div>
+<div class="indicador-galeria">Desliza para ver más</div>
+<h3 class="producto-titulo">Pelota Inteligente Para Mascotas Recarga</h3>
+<div class="precio-contenedor">
+<span class="precio-oferta">$35.000</span>
+<span class="precio-original">$60.000</span>
+</div>
+<button class="btn-comprar" data-product-id="SKU_Variable_866943" data-precio="35000">Pedir Contra Entrega</button>
+<div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+</div>
+<!-- PRODUCTO 5 -->
+<div class="producto-card">
+<div class="galeria-producto">
+<img src="cepillo_1.jpg" alt="cepillo Vista 1" class="producto-img">
+<img src="cepillo_2.jpg" alt="cepillo Vista 2" class="producto-img">
+<img src="cepillo_3.jpg" alt="cepillo Vista 3" class="producto-img">
+</div>
+<div class="indicador-galeria">Desliza para ver más</div>
+<h3 class="producto-titulo">Cepillo Automatico Peine De Mascotas</h3>
+<div class="precio-contenedor">
+<span class="precio-oferta">$22.000</span>
+<span class="precio-original">$30.000</span>
+</div>
+<button class="btn-comprar" data-product-id="SKU_102545_1001829" data-precio="22000">Pedir Contra Entrega</button>
+<div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+</div>
+<!-- PRODUCTO 6 -->
+<div class="producto-card">
+<div class="galeria-producto">
+<img src="cargador_1.avif" alt="cargador Vista 1" class="producto-img">
+</div>
+<div class="indicador-galeria">Desliza para ver más</div>
+<h3 class="producto-titulo">Cargador Para Mascotas</h3>
+<div class="precio-contenedor">
+<span class="precio-oferta">$49.500</span>
+<span class="precio-original">$66.000</span>
+</div>
+<button class="btn-comprar" data-product-id="SKU_DI_1590990" data-precio="49500">Pedir Contra Entrega</button>
+<div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+</div>
+<!-- PRODUCTO 7 -->
+<div class="producto-card">
+<div class="galeria-producto">
+<img src="recogedor_1.jpg" alt="recogedor Vista 1" class="producto-img">
+<img src="recogedor_2.jpg" alt="recogedor Vista 2" class="producto-img">
+<img src="recogedor_3.jpg" alt="recogedor Vista 3" class="producto-img">
+</div>
+<div class="indicador-galeria">Desliza para ver más</div>
+<h3 class="producto-titulo">Recogedor De Heces De Mascotas</h3>
+<div class="precio-contenedor">
+<span class="precio-oferta">$60.000</span>
+<span class="precio-original">$87.000</span>
+</div>
+<button class="btn-comprar" data-product-id="SKU_reco_2082586" data-precio="60000">Pedir Contra Entrega</button>
+<div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+</div>
+</div>
+<!-- Contenedor flotante para el modal -->
+<div id="checkout-modal" style="display:none;"></div>
+<!-- ===================================================== -->
+<!-- ===== BOTÓN FLOTANTE DE WHATSAPP (PREMIUM) ===== -->
+<!-- ===================================================== -->
+<a href="https://wa.me/573186632478?text=Hola!%20Quiero%20Asesoria%20Sobre%20Tus%20Productos%20De%20Fauna_Videos%20🐶"
+target="_blank" rel="noopener noreferrer"
+class="whatsapp-flotante" id="whatsapp-flotante"
+aria-label="Chatear con nosotros por WhatsApp">
+<span class="wa-etiqueta">💬 ¿Te ayudamos? Escríbenos</span>
+<span class="wa-boton">
+<span class="wa-pulso"></span>
+<span class="wa-pulso"></span>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+</svg>
+<span class="wa-status"></span>
+</span>
+</a>
+<!-- ===== FIN BOTÓN WHATSAPP ===== -->
+<script>
+// =====================================================
+// ===== CREDENCIALES DE TU BOT (SE QUEDAN IGUAL) =====
+// =====================================================
+const _k1 = 'ODQ5NjA4MjI4OTpBQU';
+const _k2 = 'ZFV3JnTEZfTmdzM2w3';
+const _k3 = 'VkFpZHNrZ1YxcHBlN3lNTHNsWQ==';
+const _i1 = 'OTYwOD';
+const _i2 = 'Y4MDE3';
+const tokenBot = atob(_k1 + _k2 + _k3);
+const chatId = atob(_i1 + _i2);
 
-                    <form id="form-pedido" ="(event, '${productId}', '${productoTitulo}', ${precio})">
-                        <div style="margin-bottom:12px;">
-                            <label style="font-size:12px; font-weight:700; color:#333; display:block; margin-bottom:4px;">Nombre Completo:</label>
-                            <input type="text" id="input-nombre" required placeholder="Ej. Carlos Pérez" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:14px; background:#f9f9f9;">
-                        </div>
+// Etiqueta de fuente: agrega ?v=nombrevideo a tu link para saber qué video vende
+const fuente = new URLSearchParams(window.location.search).get('v') || 'link_bio';
 
-                        <div style="margin-bottom:12px;">
-                            <label style="font-size:12px; font-weight:700; color:#333; display:block; margin-bottom:4px;">Teléfono (WhatsApp):</label>
-                            <input type="tel" id="input-telefono" required placeholder="Ej. 3181234567" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:14px; background:#f9f9f9;">
-                        </div>
+// =====================================================
+// ===== ENVÍO DIRECTO A TELEGRAM: SIN SCRIPT LOCAL, SIN TÚNEL =====
+// ===== (con 1 reintento automático si falla la red) =====
+// =====================================================
+function notificarTelegram(mensaje, reintento = 0) {
+  fetch(`https://api.telegram.org/bot${tokenBot}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text: mensaje })
+  })
+  .then(r => { if (!r.ok && reintento < 1) setTimeout(() => notificarTelegram(mensaje, 1), 2500); })
+  .catch(() => { if (reintento < 1) setTimeout(() => notificarTelegram(mensaje, 1), 2500); });
+}
 
-                        <div style="margin-bottom:20px;">
-                            <label style="font-size:12px; font-weight:700; color:#333; display:block; margin-bottom:4px;">Dirección exacta y Ciudad:</label>
-                            <input type="text" id="input-direccion" required placeholder="Ej. Calle 10 # 5-20, Cali" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:14px; background:#f9f9f9;">
-                        </div>
+// ===== EVENTO 1: ENTRÓ AL CATÁLOGO =====
+window.addEventListener('load', () => {
+  notificarTelegram(`👁️ Un usuario entró al Catálogo (Modo Contra Entrega).\n🔗 Fuente: ${fuente}`);
 
-                        <button type="submit" id="btn-enviar-pedido" style="width:100%; background:linear-gradient(135deg, #e53935 0%, #8e1c1c 100%); color:#fff; padding:15px; border:none; border-radius:100px; font-weight:900; font-size:15px; text-transform:uppercase; cursor:pointer; box-shadow:0 8px 20px rgba(229,57,53,0.3);">
-                            Confirmar Pedido Contra Entrega
-                        </button>
-                    </form>
-                </div>
-            `;
-            modal.style.display = 'flex';
-        }
+  // ===== BOTÓN WHATSAPP: muestra la etiqueta sola unos segundos =====
+  setTimeout(() => {
+    const wa = document.getElementById('whatsapp-flotante');
+    if (wa) {
+      wa.classList.add('mostrar-etiqueta');
+      setTimeout(() => wa.classList.remove('mostrar-etiqueta'), 5000);
+    }
+  }, 2600);
+  // ===== FIN BOTÓN WHATSAPP =====
+});
 
-        function enviarPedidoBackend(e, productId, productoTitulo, precio) {
-            e.preventDefault();
+// ===== Abrir formulario de pedido =====
+const botonesCompra = document.querySelectorAll('.btn-comprar');
+botonesCompra.forEach(boton => {
+  boton.addEventListener('click', (e) => {
+    const tarjeta = e.target.closest('.producto-card');
+    const productoTitulo = tarjeta.querySelector('.producto-titulo').innerText;
+    const productId = e.target.getAttribute('data-product-id');
+    const precio = parseInt(e.target.getAttribute('data-precio'));
+    mostrarFormularioPedido(productId, productoTitulo, precio);
+  });
+});
 
-            const nombre = document.getElementById('input-nombre').value;
-            const telefono = document.getElementById('input-telefono').value;
-            const direccion = document.getElementById('input-direccion').value;
-            const btnEnviar = document.getElementById('btn-enviar-pedido');
+function mostrarFormularioPedido(productId, productoTitulo, precio) {
+  // ===== EVENTO 2: INICIÓ PEDIDO (abrió el formulario) =====
+  notificarTelegram(`🛒 Usuario iniciando pedido: ${productoTitulo}\n🔗 Fuente: ${fuente}`);
 
-            btnEnviar.innerText = "Procesando...";
-            btnEnviar.disabled = true;
+  let modal = document.getElementById('checkout-modal');
+  modal.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:flex; justify-content:center; align-items:center; z-index:9999; backdrop-filter: blur(5px); padding: 15px;";
+  modal.innerHTML = `
+<div style="background:#ffffff; color:#0f0f0f; padding:25px; border-radius:24px; max-width:420px; width:100%; box-shadow:0 25px 50px rgba(0,0,0,0.5);">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+<h3 style="margin:0; font-size:18px; font-weight:900; color:#8e1c1c;">📋 Datos para el Envío</h3>
+<button onclick="document.getElementById('checkout-modal').style.display='none'" style="background:none; border:none; font-size:20px; font-weight:bold; cursor:pointer; color:#999;">&times;</button>
+</div>
+<p style="font-size:13px; color:#555; margin-top:0; margin-bottom:15px;">Producto: <b>${productoTitulo}</b><br>Valor a pagar al recibir: <span style="color:#10b981; font-weight:bold;">$${precio.toLocaleString()} COP</span></p>
+<form id="form-pedido" onsubmit="enviarPedidoBackend(event, '${productId}', '${productoTitulo}', ${precio})">
+<div style="margin-bottom:12px;">
+<label style="font-size:12px; font-weight:700; color:#333; display:block; margin-bottom:4px;">Nombre Completo:</label>
+<input type="text" id="input-nombre" required placeholder="Ej. Carlos Pérez" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:14px; background:#f9f9f9;">
+</div>
+<div style="margin-bottom:12px;">
+<label style="font-size:12px; font-weight:700; color:#333; display:block; margin-bottom:4px;">Teléfono (WhatsApp):</label>
+<input type="tel" id="input-telefono" required placeholder="Ej. 3181234567" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:14px; background:#f9f9f9;">
+</div>
+<div style="margin-bottom:16px;">
+<label style="font-size:12px; font-weight:700; color:#333; display:block; margin-bottom:4px;">Dirección exacta y Ciudad:</label>
+<input type="text" id="input-direccion" required placeholder="Ej. Calle 10 # 5-20, Cali" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:14px; background:#f9f9f9;">
+</div>
+<div style="margin-bottom:18px; display:flex; align-items:flex-start; gap:8px;">
+<input type="checkbox" id="input-datos" required style="width:18px; height:18px; margin-top:2px; accent-color:#8e1c1c; flex:0 0 auto; cursor:pointer;">
+<label for="input-datos" style="font-size:11px; color:#666; line-height:1.5; cursor:pointer; font-weight:500;">Acepto el tratamiento de mis datos personales para gestionar mi pedido (Ley 1581 de 2012 – Habeas Data).</label>
+</div>
+<button type="submit" id="btn-enviar-pedido" style="width:100%; background:linear-gradient(135deg, #e53935 0%, #8e1c1c 100%); color:#fff; padding:15px; border:none; border-radius:100px; font-weight:900; font-size:15px; text-transform:uppercase; cursor:pointer; box-shadow:0 8px 20px rgba(229,57,53,0.3);">
+Confirmar Pedido Contra Entrega
+</button>
+</form>
+</div>
+`;
+  modal.style.display = 'flex';
+}
 
-            notificarTelegram(`🛒 Usuario iniciando pedido: ${productoTitulo} (${nombre})`);
+// ===== EVENTO 3: PEDIDO COMPLETADO → FICHA COMPLETA AL BOT =====
+function enviarPedidoBackend(e, productId, productoTitulo, precio) {
+  e.preventDefault();
+  const nombre = document.getElementById('input-nombre').value;
+  const telefono = document.getElementById('input-telefono').value;
+  const direccion = document.getElementById('input-direccion').value;
+  const btnEnviar = document.getElementById('btn-enviar-pedido');
+  btnEnviar.innerText = "Procesando...";
+  btnEnviar.disabled = true;
 
-            // Envío silencioso al backend (si está disponible), sin mostrar errores al cliente
-            fetch('https://school-seconds-honest-dates.trycloudflare.com/crear-orden-dropi', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ productId, productoTitulo, precio, nombre, telefono, direccion })
-            })
-            .then(r => r.json())
-            .then(res => { if (res && res.success) notificarTelegram(`✅ Pedido confirmado para ${nombre} - ${productoTitulo}`); })
-            .catch(error => console.error("Error de red:", error));
+  const fecha = new Date().toLocaleString('es-CO');
 
-            // ===== ÚNICO CAMBIO: MENSAJE EN PANTALLA AL CONFIRMAR =====
-            let modal = document.getElementById('checkout-modal');
-            modal.innerHTML = `
-                <div style="background:#ffffff; color:#0f0f0f; padding:30px; border-radius:24px; max-width:400px; width:100%; text-align:center; box-shadow:0 25px 50px rgba(0,0,0,0.5);">
-                    <div style="font-size:50px; margin-bottom:10px;">✅</div>
-                    <p style="color:#333; font-size:15px; line-height:1.6; margin:0 0 20px 0; font-weight:600;">
-                        Tu pedido fue confirmado, un ejecutivo de cuenta se comunicará contigo a la mayor brevedad para gestionar tu solicitud.
-                    </p>
-                    <button onclick="document.getElementById('checkout-modal').style.display='none'" style="background:#0f0f0f; color:#fff; border:none; padding:12px 25px; border-radius:100px; font-weight:800; cursor:pointer;">
-                        Aceptar
-                    </button>
-                </div>
-            `;
-            // ===== FIN DEL ÚNICO CAMBIO =====
-        }
-    </script>
+  notificarTelegram(
+    `✅ PEDIDO COMPLETADO (Contra Entrega)\n` +
+    `🐶 Producto: ${productoTitulo}\n` +
+    `🏷️ SKU: ${productId}\n` +
+    `💰 Cobrar al recibir: $${precio.toLocaleString('es-CO')} COP\n` +
+    `👤 Nombre: ${nombre}\n` +
+    `📞 Teléfono: ${telefono}\n` +
+    `📍 Dirección/Ciudad: ${direccion}\n` +
+    `🔐 Habeas Data: aceptado\n` +
+    `🔗 Fuente: ${fuente}\n` +
+    `🕒 Fecha: ${fecha}\n` +
+    `☎️ LLAMAR PARA VERIFICAR`
+  );
+
+  // ===== MENSAJE EN PANTALLA AL CONFIRMAR =====
+  let modal = document.getElementById('checkout-modal');
+  modal.innerHTML = `
+<div style="background:#ffffff; color:#0f0f0f; padding:30px; border-radius:24px; max-width:400px; width:100%; text-align:center; box-shadow:0 25px 50px rgba(0,0,0,0.5);">
+<div style="font-size:50px; margin-bottom:10px;">✅</div>
+<p style="color:#333; font-size:15px; line-height:1.6; margin:0 0 20px 0; font-weight:600;">
+Tu pedido fue confirmado, un ejecutivo de cuenta se comunicará contigo a la mayor brevedad para gestionar tu solicitud.
+</p>
+<button onclick="document.getElementById('checkout-modal').style.display='none'" style="background:#0f0f0f; color:#fff; border:none; padding:12px 25px; border-radius:100px; font-weight:800; cursor:pointer;">
+Aceptar
+</button>
+</div>
+`;
+}
+</script>
 </body>
 </html>
