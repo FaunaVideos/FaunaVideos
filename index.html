@@ -30,341 +30,6 @@ body {
 font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 margin: 0;
 padding: 0;
-background-color: var(--bg-color-main);
-background-image: radial-gradient(circle at top, var(--bg-color-gradient) 0%, var(--bg-color-main) 100%);
-color: #ffffff;
-min-height: 100vh;
-width: 100vw;
-overflow-x: hidden;
-padding-bottom: 40px;
-}
-/* EFECTO GLASSMORPHISM EN EL HEADER */
-.header-catalogo {
-text-align: center;
-padding: 30px 15px 15px 15px;
-position: sticky;
-top: 0;
-z-index: 100;
-background: rgba(5, 5, 5, 0.75);
-backdrop-filter: blur(12px);
--webkit-backdrop-filter: blur(12px);
-border-bottom: 1px solid rgba(255,255,255,0.05);
-margin-bottom: 20px;
-}
-/* CONTENEDOR PARA ALINEAR LOGO Y TEXTO ESTÉTICAMENTE */
-.logo-container {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 12px;
-margin-bottom: 4px;
-}
-/* ESTILOS PARA TU LOGO CIRCULAR */
-.logo-img {
-width: 45px;
-height: 45px;
-border-radius: 50%;
-object-fit: cover;
-border: 2px solid var(--logo-red);
-box-shadow: 0 0 10px rgba(142, 28, 28, 0.4);
-}
-.header-catalogo h1 {
-font-size: 24px;
-font-weight: 900;
-letter-spacing: -0.5px;
-margin: 0;
-color: var(--logo-red);
-animation: respiracionRoja 2s ease-in-out infinite alternate;
-}
-/* ANIMACIÓN DE DESTELLO EN TONO ROJO PARA EL LOGOTIPO */
-@keyframes respiracionRoja {
-0% {
-text-shadow: 0 0 5px rgba(142, 28, 28, 0.3);
-transform: scale(1);
-}
-100% {
-text-shadow: 0 0 15px rgba(229, 57, 53, 0.8), 0 0 25px rgba(142, 28, 28, 0.5);
-transform: scale(1.02);
-}
-}
-.header-catalogo p {
-font-size: 13px;
-font-weight: 600;
-color: #a3a3a3;
-margin: 0;
-text-transform: uppercase;
-letter-spacing: 1px;
-}
-.grid-productos {
-display: grid;
-grid-template-columns: 1fr;
-gap: 25px;
-width: 100%;
-max-width: 500px;
-margin: 0 auto;
-padding: 0 15px;
-}
-/* TARJETA PREMIUM */
-.producto-card {
-background: var(--card-bg);
-border-radius: 24px;
-padding: 16px;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
-position: relative;
-overflow: hidden;
-}
-/* GALERÍA MEJORADA */
-.galeria-producto {
-display: flex;
-overflow-x: auto;
-scroll-snap-type: x mandatory;
-gap: 8px;
-margin-bottom: 12px;
-border-radius: 16px;
-scrollbar-width: none;
--ms-overflow-style: none;
-}
-.galeria-producto::-webkit-scrollbar {
-display: none;
-}
-.producto-img {
-width: 100%;
-flex: 0 0 100%;
-aspect-ratio: 1 / 1;
-object-fit: cover;
-scroll-snap-align: center;
-border-radius: 16px;
-background-color: #f5f5f5;
-}
-.indicador-galeria {
-text-align: center;
-font-size: 12px;
-font-weight: 600;
-color: var(--secondary-text);
-margin-top: -4px;
-margin-bottom: 16px;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 4px;
-}
-.indicador-galeria::before, .indicador-galeria::after {
-content: "";
-height: 1px;
-width: 20px;
-background-color: #e0e0e0;
-}
-.producto-titulo {
-font-size: 18px;
-color: var(--primary-text);
-margin: 0 0 12px 0;
-line-height: 1.3;
-font-weight: 800;
-letter-spacing: -0.3px;
-}
-/* ÁREA DE PRECIOS MODERNA */
-.precio-contenedor {
-display: flex;
-align-items: center;
-gap: 12px;
-margin-bottom: 20px;
-background: #f8f9fa;
-padding: 12px 16px;
-border-radius: 14px;
-border: 1px solid #eeeeee;
-}
-.precio-oferta {
-color: var(--price-offer-color);
-font-weight: 900;
-font-size: 24px;
-letter-spacing: -0.5px;
-}
-.precio-original {
-text-decoration: line-through;
-color: var(--price-original-color);
-font-size: 14px;
-font-weight: 600;
-}
-/* BOTÓN DE COMPRA CON EFECTO GHOST/GLOW */
-.btn-comprar {
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 8px;
-width: 100%;
-background: linear-gradient(135deg, var(--main-accent-red) 0%, var(--dark-red) 100%);
-color: white;
-padding: 16px;
-font-size: 16px;
-font-weight: 800;
-letter-spacing: 0.5px;
-text-transform: uppercase;
-border: none;
-border-radius: 100px;
-margin-top: auto;
-box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
-cursor: pointer;
-transition: all 0.3s ease;
-position: relative;
-overflow: hidden;
-}
-.btn-comprar::after {
-content: '';
-position: absolute;
-top: 0;
-left: -100%;
-width: 50%;
-height: 100%;
-background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-transform: skewX(-20deg);
-animation: brillo 3s infinite;
-}
-@keyframes brillo {
-0% { left: -100%; }
-20% { left: 200%; }
-100% { left: 200%; }
-}
-.btn-comprar:active {
-transform: scale(0.96);
-box-shadow: 0 4px 10px rgba(229, 57, 53, 0.2);
-}
-/* TEXTO DE CONFIANZA DEBAJO DEL BOTÓN */
-.trust-badge {
-text-align: center;
-font-size: 11px;
-color: #888888;
-margin-top: 12px;
-font-weight: 600;
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 4px;
-}
-/* ===================================================== */
-/* ===== BOTÓN FLOTANTE DE WHATSAPP (PREMIUM) ===== */
-/* ===================================================== */
-.whatsapp-flotante {
-position: fixed;
-bottom: calc(25px + env(safe-area-inset-bottom, 0px));
-right: 22px;
-z-index: 9990;
-text-decoration: none;
-opacity: 0;
-transform: translateY(90px) scale(0.5);
-animation: waEntrada 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s forwards;
-}
-@keyframes waEntrada {
-to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.wa-boton {
-position: relative;
-width: 64px;
-height: 64px;
-border-radius: 50%;
-background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-display: flex;
-align-items: center;
-justify-content: center;
-box-shadow: 0 10px 25px rgba(37, 211, 102, 0.45), 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-overflow: visible;
-}
-/* Destello que barre el botón */
-.wa-boton::before {
-content: '';
-position: absolute;
-top: 0;
-left: -100%;
-width: 60%;
-height: 100%;
-background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
-transform: skewX(-20deg);
-animation: waBrillo 3.5s infinite;
-border-radius: 50%;
-}
-@keyframes waBrillo {
-0% { left: -100%; }
-25% { left: 200%; }
-100% { left: 200%; }
-}
-/* Anillos de pulso expansivos */
-.wa-pulso {
-position: absolute;
-inset: 0;
-border-radius: 50%;
-border: 2px solid rgba(37, 211, 102, 0.65);
-animation: waPulso 2.4s ease-out infinite;
-pointer-events: none;
-}
-.wa-pulso:nth-child(2) { animation-delay: 1.2s; }
-@keyframes waPulso {
-0%   { transform: scale(1);   opacity: 0.9; }
-100% { transform: scale(1.9); opacity: 0; }
-}
-.wa-boton svg {
-width: 34px;
-height: 34px;
-fill: #ffffff;
-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-position: relative;
-z-index: 2;
-transition: transform 0.3s ease;
-}
-/* Punto verde "en línea" */
-.wa-status {
-position: absolute;
-bottom: 1px;
-right: 1px;
-width: 15px;
-height: 15px;
-background: #22c55e;
-border: 3px solid #050505;
-border-radius: 50%;
-box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
-z-index: 3;
-}
-/* Etiqueta flotante (tooltip) */
-.wa-etiqueta {
-position: absolute;
-right: 76px;
-top: 50%;
-transform: translateY(-50%) translateX(12px);
-background: #ffffff;
-color: #0f0f0f;
-font-size: 13px;
-font-weight: 700;
-padding: 10px 18px;
-border-radius: 100px;
-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-white-space: nowrap;
-opacity: 0;
-pointer-events: none;
-transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.wa-etiqueta::after {
-content: '';
-position: absolute;
-right: -4px;
-top: 50%;
-transform: translateY(-50%) rotate(45deg);
-width: 10px;
-height: 10px;
-background: #ffffff;
-border-radius: 2px;
-}
-.whatsapp-flotante:hover .wa-etiqueta,
-.whatsapp-flotante.mostrar-etiqueta .wa-etiqueta {
-opacity: 1;
-transform: translateY(-50%) translateX(0);
-}
-.whatsapp-flotante:hover .wa-boton {
-transform: scale(1.1) rotate(5deg);
-box-shadow: 0 14px 34px rgba(37, 211, 102, 0.6), 0 6px 16px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-.whatsapp-flotante:hover .wa-boton svg { transform: scale(1.08); }
 .whatsapp-flotante:active .wa-boton { transform: scale(0.92); }
 /* ===== FIN BOTÓN WHATSAPP ===== */
 @media (min-width: 768px) {
@@ -393,13 +58,15 @@ max-width: 900px;
 <img src="manguera_3.avif" alt="manguera Vista 3" class="producto-img">
 </div>
 <div class="indicador-galeria">Desliza para ver más</div>
-<h3 class="producto-titulo">Manguera De Ducha Con Guante Para Perro</h3>
+<h3 class="producto-titulo">Baña a tu Perro en la Mitad de Tiempo (Sin Que se Escape ni Te Empapes)</h3>
 <div class="precio-contenedor">
 <span class="precio-oferta">$90.000</span>
 <span class="precio-original">$120.000</span>
 </div>
-<button class="btn-comprar" data-product-id="SKU_ddd_2244772" data-precio="90000">Pedir Contra Entrega</button>
+<div class="urgencia-badge">🔥 Quedan pocas unidades · Oferta solo por hoy</div>
+<button class="btn-comprar" data-product-id="SKU_ddd_2244772" data-precio="90000">Sí, Lo Quiero – Pago al Recibir 🐾</button>
 <div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+<div class="social-proof">⭐ +800 dueños ya la usan · Garantía de satisfacción</div>
 </div>
 <!-- PRODUCTO 2 -->
 <div class="producto-card">
@@ -409,13 +76,15 @@ max-width: 900px;
 <img src="botella_3.avif" alt="botella Vista 3" class="producto-img">
 </div>
 <div class="indicador-galeria">Desliza para ver más</div>
-<h3 class="producto-titulo">Botella Multiusos 3 En 1 Para Mascota</h3>
+<h3 class="producto-titulo">Dale Agua Fresca a tu Mascota en Cualquier Paseo, Sin Derrames</h3>
 <div class="precio-contenedor">
 <span class="precio-oferta">$45.000</span>
 <span class="precio-original">$60.000</span>
 </div>
-<button class="btn-comprar" data-product-id="SKU_MS-112_700082" data-precio="45000">Pedir Contra Entrega</button>
+<div class="urgencia-badge">⚡ Stock limitado esta semana</div>
+<button class="btn-comprar" data-product-id="SKU_MS-112_700082" data-precio="45000">Sí, La Quiero – Pago al Recibir 🐾</button>
 <div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+<div class="social-proof">⭐ Favorita de quienes salen a caminar con su mascota</div>
 </div>
 <!-- PRODUCTO 3 -->
 <div class="producto-card">
@@ -423,13 +92,15 @@ max-width: 900px;
 <img src="tapete_1.jpg" alt="tapete Vista 1" class="producto-img">
 </div>
 <div class="indicador-galeria">Desliza para ver más</div>
-<h3 class="producto-titulo">Tapete Entrenador de Baño Para Mascotas</h3>
+<h3 class="producto-titulo">Di Adiós a los Accidentes en Casa: Entrena a tu Mascota Más Rápido</h3>
 <div class="precio-contenedor">
 <span class="precio-oferta">$50.000</span>
 <span class="precio-original">$79.000</span>
 </div>
-<button class="btn-comprar" data-product-id="SKU_TAPETEPEQUENOPERRO_1853429" data-precio="50000">Pedir Contra Entrega</button>
+<div class="urgencia-badge">🔥 Últimas unidades disponibles</div>
+<button class="btn-comprar" data-product-id="SKU_TAPETEPEQUENOPERRO_1853429" data-precio="50000">Sí, Lo Quiero – Pago al Recibir 🐾</button>
 <div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+<div class="social-proof">⭐ 100% funciona o te devolvemos tu dinero</div>
 </div>
 <!-- PRODUCTO 4 -->
 <div class="producto-card">
@@ -439,13 +110,15 @@ max-width: 900px;
 <img src="pelota_3.jpg" alt="pelota Vista 3" class="producto-img">
 </div>
 <div class="indicador-galeria">Desliza para ver más</div>
-<h3 class="producto-titulo">Pelota Inteligente Para Mascotas Recarga</h3>
+<h3 class="producto-titulo">Mantén a tu Mascota Activa y Feliz Incluso Cuando No Estás en Casa</h3>
 <div class="precio-contenedor">
 <span class="precio-oferta">$35.000</span>
 <span class="precio-original">$60.000</span>
 </div>
-<button class="btn-comprar" data-product-id="SKU_Variable_866943" data-precio="35000">Pedir Contra Entrega</button>
+<div class="urgencia-badge">⚡ Precio especial solo por tiempo limitado</div>
+<button class="btn-comprar" data-product-id="SKU_Variable_866943" data-precio="35000">Sí, La Quiero – Pago al Recibir 🐾</button>
 <div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+<div class="social-proof">⭐ +1.200 mascotas ya juegan con ella</div>
 </div>
 <!-- PRODUCTO 5 -->
 <div class="producto-card">
@@ -455,13 +128,15 @@ max-width: 900px;
 <img src="cepillo_3.jpg" alt="cepillo Vista 3" class="producto-img">
 </div>
 <div class="indicador-galeria">Desliza para ver más</div>
-<h3 class="producto-titulo">Cepillo Automatico Peine De Mascotas</h3>
+<h3 class="producto-titulo">Elimina el Pelo Suelto de tu Mascota en Minutos, Sin Esfuerzo</h3>
 <div class="precio-contenedor">
 <span class="precio-oferta">$22.000</span>
 <span class="precio-original">$30.000</span>
 </div>
-<button class="btn-comprar" data-product-id="SKU_102545_1001829" data-precio="22000">Pedir Contra Entrega</button>
+<div class="urgencia-badge">🔥 Pocas unidades · Se agota rápido</div>
+<button class="btn-comprar" data-product-id="SKU_102545_1001829" data-precio="22000">Sí, Lo Quiero – Pago al Recibir 🐾</button>
 <div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+<div class="social-proof">⭐ El favorito de dueños de razas peludas</div>
 </div>
 <!-- PRODUCTO 6 -->
 <div class="producto-card">
@@ -469,13 +144,15 @@ max-width: 900px;
 <img src="cargador_1.avif" alt="cargador Vista 1" class="producto-img">
 </div>
 <div class="indicador-galeria">Desliza para ver más</div>
-<h3 class="producto-titulo">Cargador Para Mascotas</h3>
+<h3 class="producto-titulo">Sirve la Porción Justa a tu Mascota, Aunque no Estés en Casa</h3>
 <div class="precio-contenedor">
 <span class="precio-oferta">$49.500</span>
 <span class="precio-original">$66.000</span>
 </div>
-<button class="btn-comprar" data-product-id="SKU_DI_1590990" data-precio="49500">Pedir Contra Entrega</button>
+<div class="urgencia-badge">⚡ Oferta válida solo esta semana</div>
+<button class="btn-comprar" data-product-id="SKU_DI_1590990" data-precio="49500">Sí, Lo Quiero – Pago al Recibir 🐾</button>
 <div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+<div class="social-proof">⭐ Tranquilidad garantizada para ti y tu mascota</div>
 </div>
 <!-- PRODUCTO 7 -->
 <div class="producto-card">
@@ -485,13 +162,15 @@ max-width: 900px;
 <img src="recogedor_3.jpg" alt="recogedor Vista 3" class="producto-img">
 </div>
 <div class="indicador-galeria">Desliza para ver más</div>
-<h3 class="producto-titulo">Recogedor De Heces De Mascotas</h3>
+<h3 class="producto-titulo">Recoge las Heces de tu Mascota Sin Agacharte ni Ensuciarte las Manos</h3>
 <div class="precio-contenedor">
 <span class="precio-oferta">$60.000</span>
 <span class="precio-original">$87.000</span>
 </div>
-<button class="btn-comprar" data-product-id="SKU_reco_2082586" data-precio="60000">Pedir Contra Entrega</button>
+<div class="urgencia-badge">🔥 Últimas unidades disponibles</div>
+<button class="btn-comprar" data-product-id="SKU_reco_2082586" data-precio="60000">Sí, Lo Quiero – Pago al Recibir 🐾</button>
 <div class="trust-badge">📦 Pagas al recibir en tu casa · 🚚 Llega en 2–4 días · ↩️ Cambio gratis si llega dañado</div>
+<div class="social-proof">⭐ 100% funciona o te devolvemos tu dinero</div>
 </div>
 </div>
 <!-- Contenedor flotante para el modal -->
