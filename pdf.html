@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fauna Videos | Las 5 Trampas Alimenticias</title>
+    <!-- Fuentes Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES Y RESET --- */
+        :root {
+            --primary-color: #d35400; /* Naranja quemado / Urgencia */
+            --secondary-color: #2c3e50; /* Azul oscuro / Confianza */
+            --accent-color: #e74c3c; /* Rojo alerta */
+            --telegram-blue: #0088cc; /* Color oficial Telegram */
+            --hotmart-orange: #ff7f00; /* Color típico de botones HotMart */
+            --whatsapp-green: #25D366; /* Color WhatsApp */
+            --text-dark: #333333;
+            --bg-body: #fdfbf7; 
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-body); color: var(--text-dark); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Merriweather', serif; color: var(--secondary-color); }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%; /* Para que ocupen todo el ancho en móvil */
+            max-width: 400px; /* Limitar ancho en desktop */
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(211, 84, 0, 0.4);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(211, 84, 0, 0.6); }
+        
+        /* Botón estilo Telegram para el submit */
+        .btn-telegram-submit {
+            background-color: var(--telegram-blue);
+            color: white;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn-telegram-submit:hover { background-color: #0077b5; }
+        .btn-telegram-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        /* Nuevo Botón HotMart */
+        .btn-hotmart {
+            background-color: var(--hotmart-orange);
+            color: white;
+            font-size: 1.2rem;
+            padding: 20px 40px;
+            box-shadow: 0 5px 15px rgba(255, 127, 0, 0.4);
+            animation: pulse-orange 2s infinite;
+        }
+        .btn-hotmart:hover { background-color: #e67300; transform: scale(1.05); }
+
+        /* BOTÓN WHATSAPP PARA DUDAS (ACTUALIZADO CON MISMO EFECTO) */
+        .btn-whatsapp-support {
+            background-color: var(--whatsapp-green); /* Fondo sólido ahora */
+            color: white; /* Texto blanco para contraste */
+            border: none; /* Quitamos borde transparente */
+            font-size: 1.2rem; /* Mismo tamaño que el de compra */
+            padding: 20px 40px; /* Mismo padding */
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); /* Sombra verde suave */
+            animation: pulse-green 2s infinite; /* Nueva animación específica */
+        }
+        .btn-whatsapp-support:hover {
+            background-color: #1ebc57; /* Verde más oscuro al hover */
+            transform: scale(1.05); /* Efecto de crecimiento igual al naranja */
+        }
+
+        @keyframes pulse-orange {
+            0% { box-shadow: 0 0 0 0 rgba(255, 127, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 127, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 127, 0, 0); }
+        }
+
+        /* Animación de pulso personalizada para el verde de WhatsApp */
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        .section-padding { padding: 80px 0; }
+
+        /* --- HERO SECTION --- */
+        header.hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.6)), url('FaunaVideos.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+        }
+        .hero-content h1 { font-size: 3rem; margin-bottom: 20px; color: var(--white); }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.9; }
+        
+        .badge-warning {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* --- FORMULARIO LEAD MAGNET --- */
+        .lead-magnet-section {
+            background-color: var(--white);
+            position: relative;
+            z-index: 10;
+            margin-top: -50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--secondary-color); font-size: 0.9rem; }
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus { border-color: var(--telegram-blue); }
+        
+        .privacy-note { font-size: 0.8rem; color: #888; margin-top: 10px; text-align: center; }
+
+        /* Estados del formulario */
+        #loading-state, #success-state, #error-state { display: none; text-align: center; padding: 20px; }
+        #loading-state i { font-size: 2rem; color: var(--telegram-blue); animation: spin 1s linear infinite; }
+        #success-state i { font-size: 3rem; color: green; margin-bottom: 10px; }
+        #error-state i { font-size: 3rem; color: red; margin-bottom: 10px; }
+        
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* --- SEÑALES GRID (PREVIEW DEL PDF) --- */
+        .signals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .signal-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+        }
+        .signal-icon { font-size: 2rem; color: var(--accent-color); margin-bottom: 15px; }
+        .signal-title { font-size: 1.3rem; margin-bottom: 10px; font-weight: 700; }
+        .signal-desc { color: #666; font-size: 0.95rem; }
+
+        /* --- OFERTA PRODUCTO DIGITAL (HOTMART) --- */
+        .offer-section { background-color: var(--secondary-color); color: var(--white); }
+        .product-wrapper { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
+        .product-image img { max-width: 100%; border-radius: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .product-details h2 { color: var(--white); font-size: 2.5rem; margin-bottom: 20px; }
+        .price-tag { font-size: 2rem; font-weight: bold; color: var(--hotmart-orange); margin: 20px 0; }
+        .old-price { text-decoration: line-through; color: #aaa; font-size: 1.2rem; margin-right: 10px; }
+        .benefits-list li { margin-bottom: 15px; font-size: 1.1rem; display: flex; align-items: start; }
+        .benefits-list i { color: var(--hotmart-orange); margin-right: 10px; margin-top: 5px; }
+        
+        .guarantee-badge {
+            background: rgba(255,255,255,0.1);
+            border: 1px dashed var(--hotmart-orange);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        footer { background-color: #1a252f; color: #888; padding: 40px 0; text-align: center; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2rem; }C
+            .lead-magnet-section { padding: 20px; margin-top: 0; border-radius: 0; }
+            .product-wrapper { flex-direction: column; text-align: center; }
+            .benefits-list li { justify-content: center; text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / HERO -->
+    <header class="hero">
+        <div class="container hero-content">
+            <span class="badge-warning"><i class="fas fa-exclamation-triangle"></i> ALERTA ALIMENTARIA</span>
+            <h1>¿Tu perro está enfermo<br>por lo que come?</h1>
+            <p>Descubre las 5 "Trampas Inocentes" que destruyen su salud por dentro. Descarga la guía gratuita ahora.</p>
+            
+            <button onclick="scrollToForm()" class="btn btn-primary">
+                Descargar Guía Gratuita <i class="fas fa-arrow-down"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- FORMULARIO CAPTURA TELEGRAM -->
+    <section id="form-container" class="container lead-magnet-section">
+        <h2 style="text-align:center; margin-bottom:10px;">Ingresa tus datos para recibir la guía:</h2>
+        <p style="text-align:center; color:#666; margin-bottom:30px;">"Las 5 Trampas Alimenticias Invisibles"</p>
+        
+        <form id="lead-form">
+            <div class="form-group">
+                <label class="form-label">Nombre de tu Mascota</label>
+                <input type="text" id="pet-name" class="form-control" placeholder="Ej: Rex, Luna..." required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Tu Número de WhatsApp</label>
+                <input type="tel" id="phone-number" class="form-control" placeholder="+57 300 123 4567" required pattern="[0-9+\-\s]{10,15}">
+                <small style="color:#888; font-size:0.75rem;">Incluye código de país (ej: +57 Colombia)</small>
+            </div>
+            
+            <div class="privacy-note">
+                <i class="fas fa-shield-alt"></i> Al enviar, aceptas recibir la guía y ofertas educativas por WhatsApp/Telegram.
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn btn-telegram-submit">
+                ENVIAR DATOS A MI BOTA <i class="fab fa-telegram-plane"></i>
+            </button>
+        </form>
+
+        <!-- Mensajes de Estado -->
+        <div id="loading-state">
+            <i class="fas fa-spinner"></i>
+            <p>Procesando solicitud...</p>
+        </div>
+        <div id="success-state">
+            <i class="fas fa-check-circle"></i>
+            <h3>¡Éxito!</h3>
+            <p>Hemos recibido tus datos. Desliza hacia abajo para acceder a la solución completa.</p>
+        </div>
+        <div id="error-state">
+            <i class="fas fa-times-circle"></i>
+            <h3>Error</h3>
+            <p>No pudimos procesar el envío. Intenta nuevamente.</p>
+        </div>
+    </section>
+
+    <!-- PREVIEW DE CONTENIDO -->
+    <section class="section-padding container">
+        <div style="text-align:center; margin-bottom:50px;">
+            <h2>¿Qué contiene esta guía?</h2>
+            <p>Un adelanto de lo que podrías estar ignorando hoy mismo.</p>
+        </div>
+
+        <div class="signals-grid">
+            <div class="signal-card">
+                <i class="fas fa-apple-alt signal-icon"></i>
+                <h3 class="signal-title">Trampa #1: El Premio Frutal</h3>
+                <p class="signal-desc">Uvas y pasas son nefrotóxicas. Incluso una sola puede causar fallo renal irreversible.</p>
+            </div>
+            <div class="signal-card">
+                <i class="fas fa-pepper-hot signal-icon"></i>
+                <h3 class="signal-title">Trampa #2: La Cebolla Condimentada</h3>
+                <p class="signal-desc">Destruye glóbulos rojos causando anemia hemolítica lenta. Invisible hasta el colapso.</p>
+            </div>
+            <div class="signal-card">
+                <i class="fas fa-seedling signal-icon"></i>
+                <h3 class="signal-title">Trampa #3: El Aguacate "Sano"</h3>
+                <p class="signal-desc">Contiene persina y exceso de grasa que provoca pancreatitis aguda (dolor extremo).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE VENTA DEL INFOPRODUCTO (HOTMART - PETSAFE) -->
+    <section class="section-padding offer-section" id="oferta-pack">
+        <div class="container product-wrapper">
+            <div class="product-image">
+                <!-- IMPORTANTE: Sube aquí una mockup del ebook o usa una imagen representativa-->
+                <img src="FaunaVideos2.jpg" alt="Guia NutriPet Alimentos Seguros">
+            </div>
+            
+            <div class="product-details">
+                <h2>PetSafe:<br>Guía Rápida de Alimentos Seguros y Prohibidos</h2>
+                <p>Evita envenenamientos accidentales. Descubre qué frutas, verduras y snacks son peligrosos — y cuáles puedes darles con confianza.</p>
+                
+                <ul class="benefits-list">
+                    <li><i class="fas fa-skull-crossbones"></i> <strong>+50 alimentos prohibidos:</strong> Explicados claramente con síntomas de alerta.</li>
+                    <li><i class="fas fa-check-circle"></i> <strong>+30 alimentos seguros:</strong> Con cantidades diarias recomendadas según tamaño.</li>
+                    <li><i class="fas fa-mobile-alt"></i> <strong>Versión Móvil + Imprimible:</strong> Llévala siempre contigo en tu celular o pégala en la nevera.</li>
+                    <li><i class="fas fa-bolt"></i> <strong>Acceso Inmediato:</strong> Recíbela en menos de 1 minuto por email tras el pago.</li>
+                </ul>
+
+                <div class="price-tag">
+                    <span class="old-price">$70 USD</span>
+                    $35 USD <span style="font-size:1rem; font-weight:normal; color:#ccc">(Pago Único)</span>
+                </div>
+
+                <!-- BOTÓN PRINCIPAL: COMPRA DIRECTA HOTMART -->
+                <a href="https://ericaalexandrahincapie.hotmart.host/nutripet-wellness-0c544ae2-4b3c-45df-bb01-6d2c57194bcd?ref=L107741547V" target="_blank" class="btn btn-hotmart">
+                    VER DETALLES Y COMPRAR AHORA <i class="fas fa-shopping-cart"></i>
+                </a>
+
+                <!-- BOTÓN SECUNDARIO: SOPORTE WHATSAPP (CON EFECTO PULSO IGUAL) -->
+                <a href="#" id="support-btn" class="btn btn-whatsapp-support">
+                    ¿TIENES DUDAS? ESCRÍBENOS <i class="fab fa-whatsapp"></i>
+                </a>
+                
+                <div class="guarantee-badge">
+                    <i class="fas fa-shield-alt"></i> Garantía Incondicional de 7 Días.<br>
+                    Tendras tu DINERO de vuelta, sin preguntas hasta 7 dias despues de la compra.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Fauna Videos. Todos los derechos reservados.</p>
+            <p>Siguenos en TikTok: <strong>@fauna_videos1</strong></p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FINAL INTEGRADO (TELEGRAM LEADS + WHATSAPP SUPPORT) -->
+    <script>
+        // ==========================================
+        // CONFIGURACIÓN CRÍTICA
+        // ==========================================
+        
+        // 1. Datos del Bot de Telegram (Para recibir los leads de la guía gratis)
+        const BOT_TOKEN = "8701783753:AAFhBlG5soP1jXdc-bgGI7E8urJs0W79sOA";      // <-- ⚠️ PON TU TOKEN AQUÍ
+        const CHAT_ID = "960868017";          // <-- ⚠️ PON TU ID AQUÍ
+
+        // 2. Datos de Soporte WhatsApp (Extraídos de FaunaVideos111.html)
+        const SUPPORT_PHONE = "573186632478";
+        const SUPPORT_MESSAGE = encodeURIComponent("Hola Fauna Videos! 👋\n\nEstoy viendo la 'Guía PetSafe' en tu web.\n\nTengo algunas dudas antes de comprarla:\n\n");
+
+        // ==========================================
+
+        function scrollToForm() {
+            document.getElementById('form-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- LÓGICA DEL FORMULARIO DE LA GUÍA GRATIS (ENVÍA A TELEGRAM) ---
+        const form = document.getElementById('lead-form');
+        const loadingState = document.getElementById('loading-state');
+        const successState = document.getElementById('success-state');
+        const errorState = document.getElementById('error-state');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (BOT_TOKEN === "TU_BOT_TOKEN_AQUI") {
+                alert("Configura el Token de Telegram en el código.");
+                return;
+            }
+
+            const petName = document.getElementById('pet-name').value.trim();
+            const phoneNumber = document.getElementById('phone-number').value.trim();
+
+            form.style.display = 'none';
+            loadingState.style.display = 'block';
+            submitBtn.disabled = true;
+
+            const messageText = `🐾 NUEVO LEAD - GUÍA GRATUITA\n\n👤 Teléfono: ${phoneNumber}\n🐶 Mascota: ${petName}\n📍 Origen: FaunaVideos.online\n⏰ Fecha: ${new Date().toLocaleString()}`;
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: messageText })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    loadingState.style.display = 'none';
+                    successState.style.display = 'block';
+                    
+                    // Después de 3 segundos, hacer scroll suave hacia la oferta de venta
+                    setTimeout(() => {
+                        document.getElementById('oferta-pack').scrollIntoView({ behavior: 'smooth' });
+                    }, 3000);
+                } else {
+                    throw new Error(data.description);
+                }
+
+            } catch (error) {
+                console.error(error);
+                loadingState.style.display = 'none';
+                errorState.style.display = 'block';
+                submitBtn.disabled = false;
+                form.style.display = 'block';
+            }
+        });
+
+        // --- LÓGICA DEL BOTÓN DE SOPORTE WHATSAPP ---
+        document.getElementById('support-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const whatsappUrl = `https://wa.me/${SUPPORT_PHONE}?text=${SUPPORT_MESSAGE}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+    </script>
+</body>
+</html>
